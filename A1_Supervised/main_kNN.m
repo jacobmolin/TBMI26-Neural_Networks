@@ -7,7 +7,7 @@
 % 3 = dot cloud 3
 % 4 = OCR data
 
-dataSetNr = 2; % Change this to load new data 
+dataSetNr = 1; % Change this to load new data 
 
 % X - Data samples
 % D - Desired output from classifier for each sample
@@ -32,21 +32,21 @@ selectAtRandom = true;          % true = select samples at random, false = selec
 % XBinComb = combineBins(XBins, [1,2,3]);
 
 % Add your own code to setup data for training and test here
-% XTrain = ...
-% LTrain = ...
-% XTest  = ...
-% LTest  = ...
+XTrain = XBins{1};
+LTrain = LBins{1};
+XTest  = XBins{2};
+LTest  = LBins{2};
 
 %% Use kNN to classify data
 %  Note: you have to modify the kNN() function yourself.
 
 % Set the number of neighbors
-k = 1;
+k = 3;
 
 % Classify training data
 LPredTrain = kNN(XTrain, k, XTrain, LTrain);
 % Classify test data
-LPredTest  = kNN(XTest , k, XTrain, LTrain);
+LPredTest  = kNN(XTest , k, XTrain, LTrain)
 
 %% Calculate The Confusion Matrix and the Accuracy
 %  Note: you have to modify the calcConfusionMatrix() and calcAccuracy()
