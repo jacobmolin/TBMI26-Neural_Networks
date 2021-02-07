@@ -18,8 +18,8 @@ LPred  = zeros(size(X,1),1);
 for i=1:size(X, 1)
     D = pdist2(X(i,:),XTrain);
     [D1, I] = sort(D);
-    N = LTrain(I(:,1:k));
-    LPred(i) = mode(N);
+    Neighours = LTrain(I(:,1:k));
+    LPred(i) = mode(Neighours);
 end
 
   

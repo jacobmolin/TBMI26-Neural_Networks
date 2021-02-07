@@ -4,5 +4,8 @@ function [ acc ] = calcAccuracy( cM )
 % Add your own code here
 acc = 0;
 
+D = diag(cM);
+
+acc = sum(D) / sum(cM(:));
 end
 

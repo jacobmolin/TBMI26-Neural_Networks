@@ -4,17 +4,16 @@ function [ cM ] = calcConfusionMatrix( LPred, LTrue )
 classes  = unique(LTrue);
 NClasses = length(classes);
 
-oc0 = sum(LPred(:) == 0)
-oc1 = sum(LPred(:) == 1)
+%oc0 = sum(LPred(:) == 0)
+%oc1 = sum(LPred(:) == 1)
 
 % Add your own code here
 cM = zeros(NClasses);
-for i=1:length(LTrue)
-    for j=1:length(LTrue)
-      if (LPred(:) == i) & (LTrue(:) == j)
-          cM 
-      end
-    end
 
+for i=1:length(LPred)
+    CPred = LPred(i);
+    CTrue = LTrue(i);
+    cM(CTrue,CPred) = cM(CTrue,CPred) + 1; 
+end
 end
 
