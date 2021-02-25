@@ -121,12 +121,10 @@ trainAcc = (sum(H == yTrain))/size(yTrain, 2);
 trainError =  1 - train_acc;
 
 test_H = zeros(1,size(xTest,2));
-% test_err = zeros(1, nbrWeakClassifiers);
-test_acc = zeros(1, nbrWeakClassifiers);
+test_err = zeros(1, nbrWeakClassifiers);
 
 train_H = zeros(1,size(xTrain,2));
-% train_err = zeros(1, nbrWeakClassifiers);
-train_acc = zeros(1, nbrWeakClassifiers);
+train_err = zeros(1, nbrWeakClassifiers);
 
 for k = 1:nbrWeakClassifiers
     for c = 1:k
@@ -141,29 +139,27 @@ for k = 1:nbrWeakClassifiers
     end
 
     test_H = sign(test_H);
-    test_acc(k) = (sum(test_H == yTest))/size(yTest, 2);
-%     test_acc = (sum(test_H == yTest))/size(yTest, 2);
-%     test_error =  1 - test_acc;
-%     test_err(k) = test_error;
+    test_acc = (sum(test_H == yTest))/size(yTest, 2);
+    test_error =  1 - test_acc;
+    test_err(k) = test_error;
     
     train_H = sign(train_H);
-    train_acc(k) = (sum(train_H == yTrain))/size(yTrain, 2);
-%     train_acc = (sum(train_H == yTrain))/size(yTrain, 2);
-%     train_error =  1 - train_acc;
-%     train_err(k) = train_error;
+    train_acc = (sum(train_H == yTrain))/size(yTrain, 2);
+    train_error =  1 - train_acc;
+    train_err(k) = train_error;
 end
 
-%% Plot the accuracy of the strong classifier as a function of the number of weak classifiers.
+%% Plot the error of the strong classifier as a function of the number of weak classifiers.
 %  Note: you can find this error without re-training with a different
 %  number of weak classifiers.
 
 figure(10002)
-plot(1:nbrWeakClassifiers, train_acc); hold on;
-plot(1:nbrWeakClassifiers, test_acc); hold off;
+plot(1:nbrWeakClassifiers, train_err); hold on;
+plot(1:nbrWeakClassifiers, test_err); hold off;
 
 xlabel('nbrWeakClassifiers'); 
-ylabel('Accuracy');
-legend('Training Accuracy', 'Test Accuracy')
+ylabel('test error');
+legend('training error', test error')
 
 %% Plot some of the misclassified faces and non-faces
 %  Use the subplot command to make nice figures with multiple images.
