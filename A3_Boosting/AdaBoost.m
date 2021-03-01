@@ -118,7 +118,7 @@ end
 
 H = sign(H);
 trainAcc = (sum(H == yTrain))/size(yTrain, 2);
-trainError =  1 - train_acc;
+
 
 test_H = zeros(1,size(xTest,2));
 % test_err = zeros(1, nbrWeakClassifiers);
@@ -127,6 +127,7 @@ test_acc = zeros(1, nbrWeakClassifiers);
 train_H = zeros(1,size(xTrain,2));
 % train_err = zeros(1, nbrWeakClassifiers);
 train_acc = zeros(1, nbrWeakClassifiers);
+trainError =  1 - train_acc;
 
 for k = 1:nbrWeakClassifiers
     for c = 1:k
@@ -157,14 +158,38 @@ end
 %  Note: you can find this error without re-training with a different
 %  number of weak classifiers.
 
+AccTrain = train_acc(size(train_acc, 2));
+AccTest = test_acc(size(test_acc, 2));
+
 figure(10002)
 plot(1:nbrWeakClassifiers, train_acc); hold on;
 plot(1:nbrWeakClassifiers, test_acc); hold off;
+% xlim([0 100]);
+ylim([0.75 1]);
 
-xlabel('nbrWeakClassifiers'); 
+title('Classification Accuracy');
+xlabel('Nr of Weak Classifiers'); 
 ylabel('Accuracy');
-legend('Training Accuracy', 'Test Accuracy')
+legend('Training Accuracy', 'Test Accuracy', 'Location', 'southeast');
+text(38,0.88, strcat('Nr of training data: ', num2str(nbrTrainImages)));
+text(38,0.87, strcat('Nr of test data: ',num2str(nbrTestImages)));
+text(38,0.86, strcat('Nr of Haar-feat: ',num2str(nbrHaarFeatures)));
 
+%% Plot the 15 Haar-features selected by your classifier (one for each weak classifier).
+
+figure(1005);
+colormap gray;
+p = 1;
+for k = 1:4:60
+    k
+    idx = opt_h(3,k);
+    subplot(5,3,p),imagesc(haarFeatureMasks(:,:,idx),[-1 2]);
+    axis image;
+    axis off;
+    p = p+1;
+end
+
+% title('15 Haar-features selected by the classifier');
 %% Plot some of the misclassified faces and non-faces
 %  Use the subplot command to make nice figures with multiple images.
 
