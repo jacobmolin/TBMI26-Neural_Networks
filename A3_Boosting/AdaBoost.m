@@ -194,7 +194,24 @@ end
 %  Use the subplot command to make nice figures with multiple images.
 
 nbrMisClassified = 25;
+misClassified = zeros(1, nbrMisClassified);
+i = 1;
+j= 1;
+while j<nbrMisClassified
+    if test_H(i) ~= yTest(i)
+        misClassified(j) = i;
+        j = j+1;
+    end
+    i = i+9;
+end
 
+figure(25);
+colormap gray;
+for k = 1:20
+    subplot(4,5,k),imagesc(testImages(:,:,misClassified(k)));
+    axis image;
+    axis off;
+end
 
 
 %% Plot your choosen Haar-features
