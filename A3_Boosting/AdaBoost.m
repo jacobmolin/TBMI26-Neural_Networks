@@ -214,7 +214,3 @@ for k = 1:20
 end
 
 
-%% Plot your choosen Haar-features
-%  Use the subplot command to make nice figures with multiple images.
-
-
