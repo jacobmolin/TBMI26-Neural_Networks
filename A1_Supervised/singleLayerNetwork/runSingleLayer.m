@@ -11,16 +11,7 @@ function [ Y, L ] = runSingleLayer(X, W)
 %              L - The resulting label of each sample (vector) 
 
 % Add your own code here
-X1 = X;
-X1(end,:) = [];
-% X1
-% size(X1)
-% size(W)
-
-Y = X1.*W;
-% size(Y)
-
-% trans([1000 x 2] * [1000 x 2]
+Y = X * W;
 
 % Calculate labels
 [~, L] = max(Y, [], 2);
