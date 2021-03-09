@@ -19,7 +19,7 @@ ErrTrain = nan(numIterations+1, 1);
 ErrTest  = nan(numIterations+1, 1);
 NTrain   = size(XTrain, 1);
 NTest    = size(XTest , 1);
-NClasses = size(DTrain, 2);
+NClasses = size(DTrain, 2); % -1
 Wout = W0;
 Vout = V0;
 
@@ -29,15 +29,19 @@ YTest               = runMultiLayer(XTest , W0, V0);
 ErrTrain(1) = sum(sum((YTrain - DTrain).^2)) / (NTrain * NClasses);
 ErrTest(1)  = sum(sum((YTest  - DTest ).^2)) / (NTest  * NClasses);
 
+%whos("HTrain")
+
 for n = 1:numIterations
-    if mod(n,5000)==0
+    if mod(n,1000)==0
         n
     end
     
-    % Gradient for the hidden layer
-    grad_v = (2 / (NTrain * NClasses)) * HTrain' * (YTrain - DTrain);
-    % Gradient for the input layer layer
-    grad_w = (2 / (NTrain * NClasses)) * XTrain' * (((YTrain - DTrain) * Vout') .* tanhprim(HTrain)); % And the input layer
+    norm = 1/(NTrain * NClasses);
+    
+    grad_v = 2 * norm * HTrain' * (YTrain - DTrain);
+    grad_w = 2 * norm * XTrain' * (((YTrain - DTrain) * Vout') .* tanhprim(HTrain));
+    grad_w = grad_w(:,1:end-1);
+   
     
     % Take a learning step
     Vout = Vout - learningRate * grad_v;

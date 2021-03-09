@@ -1,4 +1,4 @@
-function [ Y, L, U ] = runMultiLayer( X, W, V )
+function [ Y, L, H ] = runMultiLayer( X, W, V )
 % RUNMULTILAYER Calculates output and labels of the net
 %
 %    Inputs:
@@ -13,8 +13,10 @@ function [ Y, L, U ] = runMultiLayer( X, W, V )
 
 % Add your own code here
 S = X * W; % Calculate the weighted sum of input signals (hidden neuron)
-U = tanh(S); % Calculate the activation of the hidden neurons (use hyperbolic tangent)
-Y = U * V; % Calculate the weighted sum of the hidden neurons
+biasCol = ones(size(S, 1), 1);
+H = [tanh(S) biasCol]; % Calculate the activation of the hidden neurons (use hyperbolic tangent)
+Y = H * V; % Calculate the weighted sum of the hidden neurons
+
 
 % Calculate labels
 [~, L] = max(Y,[],2);
