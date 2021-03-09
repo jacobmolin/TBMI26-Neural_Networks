@@ -17,7 +17,7 @@ dataSetNr = 4; % Change this to load new data
 % plotCase(X,D)
 %% Select a subset of the training features
 
-numBins = 10;                    % Number of Bins you want to devide your data into
+numBins = 6;                    % Number of Bins you want to devide your data into
 numSamplesPerLabelPerBin = inf; % Number of samples per label per bin, set to inf for max number (total number is numLabels*numSamplesPerBin)
 selectAtRandom = true;          % true = select features at random, false = select the first features
 
@@ -50,8 +50,8 @@ XTest = cat(2, XTest, ones(length(XTest), 1));
 %  Note: You need to modify trainMultiLayer() and runMultiLayer()
 %  in order to train the network
 
-numHidden     = 70 %70;     % Change this, number of hidden neurons 
-numIterations = 90000   % Change this, number of iterations (epochs)
+numHidden     = 90 %70;     % Change this, number of hidden neurons 
+numIterations = 10000   % Change this, number of iterations (epochs)
 learningRate  = 0.01 % Change this, your learning rate
 
 W0 = rand(size(XTrain,2), numHidden); % initialize your weight matrix W
