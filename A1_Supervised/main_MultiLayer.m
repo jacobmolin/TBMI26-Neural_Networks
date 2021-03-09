@@ -7,16 +7,17 @@
 % 3 = dot cloud 3
 % 4 = OCR data
 
-dataSetNr = 1; % Change this to load new data 
+dataSetNr = 4; % Change this to load new data 
 
 % X - Data samples
 % D - Desired output from classifier for each sample
 % L - Labels for each sample
 [X, D, L] = loadDataSet( dataSetNr );
 
+% plotCase(X,D)
 %% Select a subset of the training features
 
-numBins = 2;                    % Number of Bins you want to devide your data into
+numBins = 10;                    % Number of Bins you want to devide your data into
 numSamplesPerLabelPerBin = inf; % Number of samples per label per bin, set to inf for max number (total number is numLabels*numSamplesPerBin)
 selectAtRandom = true;          % true = select features at random, false = select the first features
 
@@ -29,31 +30,32 @@ selectAtRandom = true;          % true = select features at random, false = sele
 % XBinComb = combineBins(XBins, [1,2,3]);
 
 % Add your own code to setup data for training and test here
-% XTrain = ...
-% DTrain = ...
-% LTrain = ...
-% XTest  = ...
-% DTest  = ...
-% LTest  = ...
+XTrain = combineBins(XBins, 1:numBins-1);
+DTrain = combineBins(DBins, 1:numBins-1);
+LTrain = combineBins(LBins, 1:numBins-1);
+XTest  = XBins{numBins};
+DTest  = DBins{numBins};
+LTest  = LBins{numBins};
 
 %% Modify the X Matrices so that a bias is added
 %  Note that the bias must be the last feature for the plot code to work
 
 % The training data
-% XTrain = ...
+XTrain = cat(2, XTrain, ones(length(XTrain), 1));
 
 % The test data
-% XTest = ...
+XTest = cat(2, XTest, ones(length(XTest), 1));
 
 %% Train your multi-layer network
 %  Note: You need to modify trainMultiLayer() and runMultiLayer()
 %  in order to train the network
 
-numHidden     = 7;     % Change this, number of hidden neurons 
-numIterations = 800;   % Change this, number of iterations (epochs)
-learningRate  = 0.001; % Change this, your learning rate
-W0 = 0; % Initialize your weight matrix W
-V0 = 0; % Initialize your weight matrix V
+numHidden     = 70 %70;     % Change this, number of hidden neurons 
+numIterations = 90000   % Change this, number of iterations (epochs)
+learningRate  = 0.01 % Change this, your learning rate
+
+W0 = rand(size(XTrain,2), numHidden); % initialize your weight matrix W
+V0 = rand(numHidden, size(DTrain, 2)); % initialize your weight matrix V
 
 % Run training loop
 tic;

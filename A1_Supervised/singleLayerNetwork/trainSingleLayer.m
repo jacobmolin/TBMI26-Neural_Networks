@@ -24,11 +24,13 @@ YTest  = runSingleLayer(XTest , Wout);
 ErrTrain(1) = sum(sum((YTrain - DTrain).^2)) / NTrain;
 ErrTest(1)  = sum(sum((YTest  - DTest ).^2)) / NTest;
 
+% numIterations = epochs
 for n = 1:numIterations
-    % Add your own code here
+    
+    % Gradient of epsilon with regards to w
     grad_w = 2 * XTrain' * (YTrain - DTrain) / NTrain;
     
-    % Take a learning step
+    % Take a learning step (Gradient Descent)
     Wout = Wout - learningRate * grad_w;
     
     % Evaluate errors

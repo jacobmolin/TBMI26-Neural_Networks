@@ -30,9 +30,14 @@ ErrTrain(1) = sum(sum((YTrain - DTrain).^2)) / (NTrain * NClasses);
 ErrTest(1)  = sum(sum((YTest  - DTest ).^2)) / (NTest  * NClasses);
 
 for n = 1:numIterations
-    % Add your own code here
-    grad_v = 0; % Gradient for the output layer
-    grad_w = 0; % And the input layer
+    if mod(n,5000)==0
+        n
+    end
+    
+    % Gradient for the hidden layer
+    grad_v = (2 / (NTrain * NClasses)) * HTrain' * (YTrain - DTrain);
+    % Gradient for the input layer layer
+    grad_w = (2 / (NTrain * NClasses)) * XTrain' * (((YTrain - DTrain) * Vout') .* tanhprim(HTrain)); % And the input layer
     
     % Take a learning step
     Vout = Vout - learningRate * grad_v;

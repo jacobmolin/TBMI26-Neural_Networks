@@ -7,13 +7,16 @@
 % 3 = dot cloud 3
 % 4 = OCR data
 
-dataSetNr = 4; % Change this to load new data 
+dataSetNr = 1; % Change this to load new data 
 
 % X - Data samples
 % D - Desired output from classifier for each sample
 % L - Labels for each sample
 [X, D, L] = loadDataSet( dataSetNr );
 
+
+% You can plot and study dataset 1 to 3 by running:
+% plotCase(X,D)
 %% Select a subset of the training samples
 
 numBins = 8;                    % Number of Bins you want to devide your data into
@@ -49,9 +52,9 @@ XTest = cat(2, XTest, ones(length(XTest), 1));
 %  Note: You need to modify trainSingleLayer() and runSingleLayer()
 %  in order to train the network
 
-numIterations = 10000;  % Change this, number of iterations (epochs)
+numIterations = 27000;  % Change this, number of iterations (epochs)
 learningRate  = 0.0001; % Change this, your learning rate
-
+ 
 W0 = rand(size(XTrain,2), size(DTrain, 2)); % initialize your weight matrix W
 
 
