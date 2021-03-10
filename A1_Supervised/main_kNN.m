@@ -19,7 +19,7 @@ dataSetNr = 1; % Change this to load new data
 
 %% Select a subset of the training samples
 
-numBins = 2;                    % Number of bins you want to devide your data into
+numBins = 5;                    % Number of bins you want to devide your data into
 numSamplesPerLabelPerBin = inf; % Number of samples per label per bin, set to inf for max number (total number is numLabels*numSamplesPerBin)
 selectAtRandom = true;          % true = select samples at random, false = select the first features
 

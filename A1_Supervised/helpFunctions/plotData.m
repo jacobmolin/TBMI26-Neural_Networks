@@ -5,6 +5,9 @@ function plotData(X,L,LPred)
 c='xo+*sd';
 hold on;
 for k = 1:6
+%     whos("L")
+%     whos("k")
+%     whos("LPred")
     ind     = (L == k) & (L == LPred);
     ind_err = (L == k) & (L ~= LPred);
     scatter(X(ind    ,1), X(ind    ,2), strcat('g',c(k)));

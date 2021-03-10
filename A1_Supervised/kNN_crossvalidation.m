@@ -7,7 +7,7 @@
 % 3 = dot cloud 3
 % 4 = OCR data
 
-dataSetNr = 1; % Change this to load new data 
+dataSetNr = 4; % Change this to load new data 
 
 % X - Data samples
 % D - Desired output from classifier for each sample
@@ -36,12 +36,13 @@ selectAtRandom = true;          % true = select samples at random, false = selec
 % Or use the combineBins helper function to combine several bins into one matrix (good for cross validataion)
 % XBinComb = combineBins(XBins, [1,2,3]);
 
-kRange = 15;
+kRange = 50;
 bestMedAcc = 0;
 bestK = 0;
 for j=1:kRange
     k = j;
     acc = 0;
+    medAcc = 0;
     
     for i = 1:n
         vec = [1:n];
@@ -73,12 +74,32 @@ for j=1:kRange
         acc = acc + calcAccuracy(cM);
     end
     
-    medAcc = acc / n
+    medAcc = acc / n;
     if (medAcc > bestMedAcc)
-        bestMedAcc = medAcc;
+        bestMedAcc = medAcc
         bestK = k;
     end
 end
 
 bestMedAcc
-bestK
+k = bestK
+
+XTrain = combineBins(XBins, 1:numBins-1);
+LTrain = combineBins(LBins, 1:numBins-1);
+XTest  = XBins{numBins};
+LTest  = LBins{numBins};
+
+LPredTrain = kNN(XTrain, k, XTrain, LTrain);
+LPredTest  = kNN(XTest , k, XTrain, LTrain);
+
+cM = calcConfusionMatrix(LPredTest, LTest);
+acc = calcAccuracy(cM);
+        
+%% Plot classifications
+%  Note: You should not have to modify this code
+
+if dataSetNr < 4
+    plotResultDots(XTrain, LTrain, LPredTrain, XTest, LTest, LPredTest, 'kNN', [], bestK);
+else
+    plotResultsOCR(XTest, LTest, LPredTest)
+end
